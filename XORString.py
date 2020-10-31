@@ -15,9 +15,15 @@ def humanxor(input, key):
     length_to_add = len(input) % len(key)
     print(length_to_add)
     key_length_adjusted = key + key[0:length_to_add]
-    print(key_length_adjusted)
+    input_hexadecimal = ""
     output = input ^ key_length_adjusted
     print(output)
+    for i in input:
+        input_convert_int = int(i, 16)
+        converted_char = str(hex(input_convert_int)
+        print("hexadecimal value of character " + i + " is " + converted_char);
+        input_hexadecimal = "";
+
 
 
 xorstring("human", "abcdefghij", "acegik")
