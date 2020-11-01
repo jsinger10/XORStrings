@@ -16,6 +16,11 @@ def xorstring(mode, input_file, key_file):
 
 def humanxor(input, key):
     output = ""
+    toReturn=""
+    # input = input.encode()
+    # print("hopefully this works : ")
+    # #print(int("0x", 16))
+    # print(eval(input))
     print("length of input is : " + str(len(input)))
     print("length of key is : " + str(len(key)))
     key_length_adjusted = ""
@@ -26,26 +31,24 @@ def humanxor(input, key):
             length_to_add = len(input) % len(key)
             print(length_to_add)
             key_length_adjusted = key_length_adjusted + key[0:length_to_add]
-
     input_hexadecimal = ""
-
-    for i in input:
-        converted_char = str(hex(ord(i)));
-        print("hexadecimal value of character " + i + " is " + converted_char);
-        input_hexadecimal += converted_char;
-        #input_hexadecimal += " ";
-    print("input as hexadecimal is : " + str(type(input_hexadecimal)));
+    for i in range(len(input)):
+        print("input[i] is: " + input[i] + ", key[i] is: " + key_length_adjusted[i])
+        print(hex(ord(input[i])))
+        print(hex(ord(key_length_adjusted[i])))
+        print(hex(int(hex(ord(input[i])), 16) ^ int(hex(ord(key_length_adjusted[i])), 16)))
+        output = output + str(hex(int(hex(ord(input[i])), 16) ^ int(hex(ord(key_length_adjusted[i])), 16)))
+    #print("input as hexadecimal is : " + str(type(input_hexadecimal)));
     key_hexadecimal = "";
 
-    for i in key_length_adjusted:
-        converted_char = str(hex(ord(i)));
-        print("hexadecimal value of character " + i + " is " + converted_char);
-        key_hexadecimal += converted_char;
-        #key_hexadecimal += " ";
-    #print("key as hexadecimal is : " + key_hexadecimal)
-    #print("XORed input and key is : " + str(hex(int(input_hexadecimal, 16)) ^ hex(int(key_hexadecimal, 16))))
-    output = hex(input_hexadecimal) ^ hex(key_hexadecimal)
     print(output)
+    # for l in range(0, len(output), 2):
+    #     print(output[l:l+2])
+    #     print(bytearray.fromhex(output[l:l+2]).decode())
+    #     toReturn = toReturn + str(bytearray.fromhex(output[l:l+2]).decode())
+    # print(toReturn)
+    print(bytearray.fromhex(output).decode())
 
 
+print(ord("h") ^ ord("A"))
 xorstring("human", "input.txt", "key.txt")
