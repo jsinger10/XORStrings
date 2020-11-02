@@ -1,9 +1,10 @@
 import sys
+import io
 mode = sys.argv[1]
 keyfile = sys.argv[2]
 inpfile = sys.argv[3]
-key = open(keyfile).read()[:-1]
-inp = open(inpfile).read()[:-1]
+key = io.open(keyfile, encoding='cp1252').read()[:-1]
+inp = io.open(inpfile, encoding='cp1252').read()[:-1]
 debug = False
 
 if(debug):
@@ -11,11 +12,11 @@ if(debug):
     print("key: "+key)
     print("inp: "+inp)
 
-def xorstring(mode, input, key):
+def xorstring(mode, inpfile, keyfile):
     if mode == "human":
-        return humanxor(input, key)
+        return humanxor(inp, key)
     else:
-        return numberxor(input, key)
+        return numberxor(inp, key)
 
 
 def humanxor(input, key):
@@ -30,11 +31,17 @@ def humanxor(input, key):
             key_length_adjusted = key_length_adjusted + key[0:length_to_add]
     for i in range(len(input)):
         toAdd = str(hex(int(hex(ord(input[i])), 16) ^ int(hex(ord(key_length_adjusted[i])), 16)))
+        if len(toAdd) < 4:
+            toAdd = toAdd[0:2] + "0" + toAdd[2]
+        #print(input[i] + " " + hex(int(hex(ord(input[i])), 16)) + " + " + hex(ord(key_length_adjusted[i])) + " = " +toAdd)
         output = output + toAdd
     for l in range(0, len(output), 4):
-        toReturn = toReturn + str(bytearray.fromhex(output[l+2:l+4]).decode())
+        #print(output[l + 2: l + 4])
+        #print(str(output[l:l + 4]) + " = " + bytearray.fromhex(output[l + 2:l + 4]).decode(encoding='cp1252'))
+        toReturn = toReturn + str(bytearray.fromhex(output[l+2:l+4]).decode(encoding='cp1252'))
     print(toReturn)
     return toReturn
+
 
 def numberxor(input, key):
     output = ""
@@ -46,8 +53,11 @@ def numberxor(input, key):
             length_to_add = len(input) % len(key)
             key_length_adjusted = key_length_adjusted + key[0:length_to_add]
     for i in range(len(input)):
-        toAdd = str(hex(int(hex(ord(input[i])), 16) ^ int(hex(ord(key_length_adjusted[i])), 16)))[2:4] + " "
-        output = output + toAdd
+        toAdd = str(hex(int(hex(ord(input[i])), 16) ^ int(hex(ord(key_length_adjusted[i])), 16)))
+        if len(toAdd) < 4:
+            toAdd = toAdd[0:2] + "0" + toAdd[2]
+        toAdd = toAdd[2:4]
+        output = output + toAdd + " "
     print(output)
     return output
 

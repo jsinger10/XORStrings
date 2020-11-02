@@ -1,2 +1,2 @@
 run:
-	@python XORString.py $(ARGS) > output.txt
+	@python XORString.py $(ARGS) > output2.txt
