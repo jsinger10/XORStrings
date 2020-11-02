@@ -2,8 +2,8 @@ import sys
 mode = sys.argv[1]
 keyfile = sys.argv[2]
 inpfile = sys.argv[3]
-key = open(keyfile).read()
-inp = open(inpfile).read()
+key = open(keyfile).read()[:-1]
+inp = open(inpfile).read()[:-1]
 debug = False
 
 if(debug):
