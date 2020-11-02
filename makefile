@@ -1,2 +1,2 @@
 run:
-	python XORString.py $(ARGS)
+	@python XORString.py $(ARGS)
