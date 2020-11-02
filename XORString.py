@@ -2,8 +2,8 @@ import sys
 mode = sys.argv[1]
 keyfile = sys.argv[2]
 inpfile = sys.argv[3]
-key = open(keyfile).read()[:-1] #removes the mandatory \n at the end of the file to support one line messages.
-inp = open(inpfile).read()[:-1] #removes the mandatory \n at the end of the file to support one line messages.
+key = open(keyfile).read()
+inp = open(inpfile).read()
 debug = False
 
 if(debug):
@@ -14,10 +14,10 @@ if(debug):
 def xorstring(mode, input, key):
     if mode == "human":
         # print("do the human xor")
-        humanxor(input, key)
+        return humanxor(input, key)
     else:
         # print("do the hexadecimal number output")
-        numberxor(input, key)
+        return numberxor(input, key)
 
 
 def humanxor(input, key):
@@ -49,6 +49,7 @@ def humanxor(input, key):
         toReturn = toReturn + str(bytearray.fromhex(output[l+2:l+4]).decode())
     # print("this is toReturn: " + toReturn)
     # print("desired output: " + " this is a test")
+    print(toReturn)
     return toReturn
 
 def numberxor(input, key):
@@ -73,14 +74,14 @@ def numberxor(input, key):
         # print("the XOR result is : " + str(bytearray.fromhex(toAdd[2:4]).decode()))
         output = output + toAdd
 
-    print(output)
     # for l in range(0, len(output), 4):
     #     # print(output[l:l+4])
     #     # print(bytearray.fromhex(output[l+2:l+4]).decode())
     #     toReturn = toReturn + str(bytearray.fromhex(output[l+2:l+4]).decode())
     # print("this is toReturn: " + toReturn)
     # print("desired output: " + " 66 3d 3b 21 35 69 3a 3b 66 28 73 3c 23 3a 27")
-    return toReturn
+    print(output)
+    return output
 
 
 xorstring(mode, inp, key)
