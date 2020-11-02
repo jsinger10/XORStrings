@@ -12,7 +12,7 @@ if(debug):
     print("key: "+key)
     print("inp: "+inp)
 
-def xorstring(mode, inpfile, keyfile):
+def xorstring(mode, inp, key):
     if mode == "human":
         return humanxor(inp, key)
     else:
@@ -33,11 +33,8 @@ def humanxor(input, key):
         toAdd = str(hex(int(hex(ord(input[i])), 16) ^ int(hex(ord(key_length_adjusted[i])), 16)))
         if len(toAdd) < 4:
             toAdd = toAdd[0:2] + "0" + toAdd[2]
-        #print(input[i] + " " + hex(int(hex(ord(input[i])), 16)) + " + " + hex(ord(key_length_adjusted[i])) + " = " +toAdd)
         output = output + toAdd
     for l in range(0, len(output), 4):
-        #print(output[l + 2: l + 4])
-        #print(str(output[l:l + 4]) + " = " + bytearray.fromhex(output[l + 2:l + 4]).decode(encoding='cp1252'))
         toReturn = toReturn + str(bytearray.fromhex(output[l+2:l+4]).decode(encoding='cp1252'))
     print(toReturn)
     return toReturn
